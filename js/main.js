@@ -1,20 +1,17 @@
 window.addEventListener("load", function() {
 
-	const display = new Display(document.querySelector("#canvas"),800,600)
+	const display = new Display(document.querySelector("#canvas"),1280,720)
 	const controller = new KeyboardController("w","a","s","d")
 	const player = new Player("white")
 
 	const update = function() {
-		if (controller.left) {
-			player.moveX(-5 / engine.time_delta);
-		} else if (controller.right) {
-			player.moveX(5 / engine.time_delta);
+		if (controller.up || controller.down || controller.right || controller.left) {
+			player.move(10,engine.time_delta,Math.atan2(controller.down - controller.up,controller.right - controller.left))
 		}
-		player.update(engine.time_delta);
-		console.log(engine.time_delta);
 	}
+	
 	const render = function() {
-		display.fill("black");
+		display.fill("rgba(0,0,0,0.85)");
 		display.drawRectangle(player.x,player.y,player.width,player.height,player.color);
 		display.render();
 	}

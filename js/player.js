@@ -7,19 +7,13 @@ const Player = function(color,x=400,y=400) {
 	this.velocity_x = 0;
 	this.velocity_y = 0;
 
-	this.moveY = function(speed) {
-		this.velocity_y += speed;
-	}
-	this.moveX = function(speed) {
-		this.velocity_x += speed;
+	this.move = function(speed, mod, angle) {
+		this.x += Math.cos(angle) * speed * 1/mod;
+		this.y += Math.sin(angle) * speed * 1/mod;
 	}
 
 	this.update = function(mod) {
-		this.x += (this.velocity_x);
-		this.y += (this.velocity_y);
 
-		this.velocity_x /= Math.pow(2,1/mod);
-		this.velocity_y /= Math.pow(2,1/mod);
 	}
 
 }
