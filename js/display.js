@@ -38,9 +38,7 @@ const Display = function(canvas,width,height) {
 
 	this.resize = function(w,h,w_ratio,h_ratio) {
 		if (h/w > h_ratio/w_ratio) {
-			console.log(w)
 			w -= w % (w_ratio * h_ratio)
-			console.log(w)
 			this.context.canvas.width = w;
 			this.context.canvas.height = w * (h_ratio/w_ratio)
 		} else {

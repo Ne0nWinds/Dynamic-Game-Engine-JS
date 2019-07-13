@@ -1,9 +1,9 @@
 window.addEventListener("load", function() {
 
 	const controller = new KeyboardController("w","a","s","d")
-	const player = new Player("white")
 	const world = new World();
-	const display = new Display(document.querySelector("#canvas"),world.level[0].length * world.tile_size,world.level.length * world.tile_size)
+	world.generateMap(25,25);
+	const display = new Display(document.querySelector("#canvas"),world.map[0].length * world.tile_size,world.map.length * world.tile_size)
 
 	const resize = function() {
 		display.resize(window.innerWidth,window.innerHeight,1,1);
@@ -11,13 +11,14 @@ window.addEventListener("load", function() {
 
 	const update = function() {
 		if (controller.up || controller.down || controller.right || controller.left) {
-			player.move(4,engine.time_delta,Math.atan2(controller.down - controller.up,controller.right - controller.left))
+			world.player.move(1,engine.time_delta,Math.atan2(controller.down - controller.up,controller.right - controller.left))
+			world.update();
 		}
 	}
 	
 	const render = function() {
-		display.drawMap(world.level,world.mapKey,world.tile_size);
-		display.drawRectangle(player.x,player.y,player.width,player.height,player.color);
+		display.drawMap(world.map,world.mapKey,world.tile_size);
+		display.drawRectangle(world.player.x,world.player.y,world.player.width,world.player.height,world.player.color);
 		display.render();
 	}
 	const engine = new Engine(60,update,render);
