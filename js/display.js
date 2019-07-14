@@ -1,9 +1,11 @@
-const Display = function(canvas,width,height) {
+const Display = function(canvas,contextWidth,contextHeight,bufferWidth,bufferHeight) {
 
 	this.context = canvas.getContext("2d")
 	this.buffer = document.createElement("canvas").getContext("2d")
-	this.buffer.canvas.width = this.context.canvas.width = width;
-	this.buffer.canvas.height = this.context.canvas.height = height;
+	this.buffer.canvas.width = bufferWidth;
+	this.buffer.canvas.height = bufferHeight;
+	this.context.canvas.width = contextWidth;
+	this.context.canvas.height = contextHeight;
 
 	this.fill = function(color) {
 
@@ -32,9 +34,10 @@ const Display = function(canvas,width,height) {
 
     };
 
-	this.render = function() {
-		this.context.drawImage(this.buffer.canvas,0,0,this.context.canvas.width,this.context.canvas.height);
-	}
+    this.render = function(top=16,right=16,zoomLevel) {
+		this.context.drawImage(this.buffer.canvas,right*-1,top*-1,this.buffer.canvas.width * zoomLevel,this.buffer.canvas.height * zoomLevel)
+    };
+
 
 	this.resize = function(w,h,w_ratio,h_ratio) {
 		if (h/w > h_ratio/w_ratio) {
